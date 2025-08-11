@@ -2,9 +2,11 @@ from typing import Dict, Any
 from fastmcp import FastMCP
 from src.core.tools.weather import WeatherTool
 from src.core.tools.calculator import CalculatorTool
+from src.core.tools.youtube_transcript import YouTubeTranscriptTool
 
 weather_mcp = FastMCP("Weather Bot 🌤️")
 calculator_mcp = FastMCP("Calculator Bot 🧮")
+youtube_transcript_mcp = FastMCP("YouTube Transcript Bot 🎥")
 
 
 @weather_mcp.tool
@@ -250,3 +252,47 @@ def get_supported_calculator_functions() -> Dict[str, Any]:
             "success": False,
             "error": str(e)
         }
+
+
+# YouTube Transcript Tools
+@youtube_transcript_mcp.tool
+def generate_youtube_transcript(
+    video_url: str,
+    model_size: str = "base"
+) -> Dict[str, Any]:
+    """
+    Generate transcript from a YouTube video using Whisper AI
+    
+    Args:
+        video_url: YouTube video URL
+        model_size: Whisper model size ('tiny', 'base', 'small', 'medium', 'large')
+    
+    Returns:
+        Dictionary containing transcript information
+    """
+    try:
+        transcript_tool = YouTubeTranscriptTool(model_size)
+        result = transcript_tool.get_transcript(video_url)
+        
+        if result.success:
+            return {
+                "success": True,
+                "data": {
+                    "video_url": result.video_url,
+                    "video_title": result.video_title,
+                    "transcript": result.transcript,
+                    "model_size": model_size
+                }
+            }
+        else:
+            return {
+                "success": False,
+                "error": result.error_message
+            }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+

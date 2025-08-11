@@ -54,7 +54,7 @@ class WeatherTool:
                 "aqi": "no"  # Disable air quality data for simplicity
             }
 
-            response = requests.get(weather_url, params=params, timeout=10)
+            response = requests.get(weather_url, params=params, timeout=60)
             response.raise_for_status()
             weather_data = response.json()
 
@@ -96,7 +96,7 @@ class WeatherTool:
                 "alerts": "no"  # Disable alerts for simplicity
             }
 
-            response = requests.get(forecast_url, params=params, timeout=10)
+            response = requests.get(forecast_url, params=params, timeout=60)
             response.raise_for_status()
             forecast_data = response.json()
             return self._parse_forecast_data(forecast_data, location, days)

@@ -1,4 +1,9 @@
 fastmcp>=0.1.0
 requests>=2.31.0
 watchdog>=3.0.0
-python-dotenv>=1.0.0
+python-dotenv>=0.1.0
+yt-dlp>=2023.12.30
+openai-whisper>=20231117
+torch>=2.0.0
+torchaudio>=2.0.0
+ffmpeg-python>=0.2.0
